@@ -1,0 +1,2 @@
+# goneprotoss.github.io
+pages
