@@ -15,9 +15,22 @@ body {
     display: flex;
     justify-content: space-around;
     margin: 10px 0;
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: bolder;
 }
     .game-title button{
         cursor: pointer;
+        background-color: rgba(192,192,192,1);
+        border-top: 2px solid white;
+        border-left: 2px solid white;
+        border-right: 2px solid rgba(128,128,128,1);
+        border-bottom: 2px solid rgba(128,128,128,1);
+    }
+    .game-title .mousedown {
+        border-top: 2px solid rgba(128,128,128,1);
+        border-left: 2px solid rgba(128,128,128,1);
+        border-right: 2px solid white;
+        border-bottom: 2px solid white;
     }
     .game-title div {
         box-sizing: border-box;

@@ -1,7 +1,9 @@
 // 0: nothing, 1-8: digits, 9: mine
 var Field = {
     mine_left: 0,
+
     field: [],
+
     init_field: function(level) {
         this.mine_left = level.mine;
 
@@ -40,5 +42,24 @@ var Field = {
                 }
             }
         }
+    },
+
+    create_new_field: function(level) {
+        let field_node = document.querySelector(".mine-field");
+        field_node.innerHTML = "";
+        field_node.style.width = level.col*16 + "px";
+        
+        for (let row = 0; row < level.row; row++) {
+            let row_node = document.createElement("div");
+            row_node.className = "row";
+            for (let col = 0; col < level.col; col++) {
+                let cell_node = document.createElement("div");
+                cell_node.classList = "cell cell-unknown";
+                row_node.appendChild(cell_node);
+            }
+            field_node.appendChild(row_node);
+        }
+
+        set_mine_left(level.mine);
     }
 };
