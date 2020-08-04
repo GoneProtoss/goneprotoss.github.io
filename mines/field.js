@@ -4,7 +4,11 @@ var Field = {
 
     field: [],
 
-    init_field: function(level) {
+    // 0: fresh, 1: ongoing, 2: success, 3: fail
+    state: 0,
+
+    init_field: function(level, position) {
+        this.field = [];
         this.mine_left = level.mine;
 
         // fill up cells with mines
@@ -16,7 +20,7 @@ var Field = {
                 for (let col = 0; col < level.col; col++) {
                     let random_number = Math.random();
                     let val = 0;
-                    if (random_number < 0.05 && this.mine_left > 0) {
+                    if (random_number < 0.1 && this.mine_left > 0 && row !== position[0] && col !== position[1]) {
                         this.mine_left = this.mine_left - 1;
                         val = 9;
                     }
@@ -39,6 +43,7 @@ var Field = {
                         if (this.field[cell_cor[0]][cell_cor[1]] === 9) {sum++;}
                     }
                     this.field[row][col] = sum;
+                } else {
                 }
             }
         }
@@ -48,18 +53,86 @@ var Field = {
         let field_node = document.querySelector(".mine-field");
         field_node.innerHTML = "";
         field_node.style.width = level.col*16 + "px";
-        
+
         for (let row = 0; row < level.row; row++) {
             let row_node = document.createElement("div");
             row_node.className = "row";
             for (let col = 0; col < level.col; col++) {
                 let cell_node = document.createElement("div");
                 cell_node.classList = "cell cell-unknown";
+                cell_node.id = "c-"+row+"-"+col;
+                cell_node.setAttribute("flag", "no");
+                cell_node.setAttribute("row", row+"");
+                cell_node.setAttribute("col", col+"");
+
+                cell_node.addEventListener('click',(event)=>{
+                    event.preventDefault();
+                    if (cell_node.classList.toString().indexOf("cell-unknown") > -1) {
+                        this.click_cell(event.target, [row, col], level);
+                    }
+                    return false;
+                });
+
+                cell_node.oncontextmenu = (event)=>{
+                    event.preventDefault();
+                    if (cell_node.classList.toString().indexOf("cell-unknown") > -1) {
+                        this.right_click_cell(event.target);
+                    }
+                    return false;
+                };
+
                 row_node.appendChild(cell_node);
             }
             field_node.appendChild(row_node);
         }
 
         set_mine_left(level.mine);
+        this.state = 0;
+    },
+
+    click_cell: function (cell_node, position, level) {
+        cell_node.classList = "cell cell-solved";
+        if (this.state === 0) {
+            this.init_field(level, position);
+            cell_node.innerHTML = cell_dict[this.field[position[0]][position[1]]];
+            this.expand_cell(position,[]);
+            this.state = 1;
+        } else {
+            cell_node.innerHTML = cell_dict[this.field[position[0]][position[1]]];
+            this.expand_cell(position,[]);
+        }
+    },
+
+    right_click_cell: function (cell_node) {
+        if (cell_node.nodeName === "SPAN") {
+            cell_node = cell_node.parentNode;
+        }
+        let mine_left = get_mine_left();
+        if (cell_node.getAttribute("flag") === "no") {
+            if (mine_left > 0) {
+                set_mine_left(mine_left-1);
+                cell_node.innerHTML = cell_dict[9];
+                cell_node.setAttribute("flag", "yes");
+            }
+        } else if (cell_node.getAttribute("flag") === "yes"){
+            cell_node.innerHTML = "";
+            cell_node.setAttribute("flag", "no");
+            set_mine_left(mine_left+1);
+        }
+    },
+
+    expand_cell: function (position, checked) {
+        checked.push(position[0] + "-" + position[1]);
+        let cells_around = get_cells_around(position[0], position[1], this.field.length, this.field[0].length);
+        for (let cell of cells_around) {
+            let key = cell[0] + "-" + cell[1];
+            if (this.field[cell[0]][cell[1]] < 9) {
+                let node_ref = document.getElementById("c-"+key);
+                node_ref.classList = "cell cell-solved";
+                node_ref.innerHTML = cell_dict[this.field[cell[0]][cell[1]]];
+                // checked.push(key);
+                // this.expand_cell(cell, checked);
+            }
+        }
     }
 };

@@ -21,6 +21,7 @@ window.onload = ()=>{
 
                 // create new board(game)
                 the_field.create_new_field(current_level);
+                timer.reset_timer();
             }
             return false;
         });
@@ -30,24 +31,23 @@ window.onload = ()=>{
      * bind event for start btn
      */
     let start_btn = document.querySelector("#start-btn");
-    let start_btn_emoji = start_btn.innerHTML;
     start_btn.addEventListener("mousedown", (event)=>{
         event.preventDefault();
-        start_btn_emoji = start_btn.innerHTML;
         start_btn.innerHTML = "😯";
         start_btn.className = "mousedown";
         return false;
     });
     start_btn.addEventListener("mouseup", (event)=>{
         event.preventDefault();
-        start_btn.innerHTML = start_btn_emoji;
+        start_btn.innerHTML = "😊";
         start_btn.className = "";
         // setting up current level
         current_level = levels.get_curent();
         // create new board(game)
         the_field.create_new_field(current_level);
+        timer.reset_timer();
         return false;
     });
 
-    // the_field.init_field(current_level);
+    timer.reset_timer();
 }
