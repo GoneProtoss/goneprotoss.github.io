@@ -28,7 +28,7 @@ window.onload = ()=>{
     }
 
     /**
-     * bind event for start btn
+     * bind events for start btn
      */
     let start_btn = document.querySelector("#start-btn");
     start_btn.addEventListener("mousedown", (event)=>{

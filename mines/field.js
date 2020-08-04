@@ -1,7 +1,7 @@
-// 0: nothing, 1-8: digits, 9: mine
-var Field = {
+const Field = {
     mine_left: 0,
 
+    // 0: nothing, 1-8: digits, 9: mine
     field: [],
 
     // 0: fresh, 1: ongoing, 2: success, 3: fail
@@ -98,9 +98,13 @@ var Field = {
             this.expand_cell(position,[]);
             this.state = 1;
         } else {
+            if (this.detect_fail(this.field, cell_node, position)) {
+                return false;
+            }
             cell_node.innerHTML = cell_dict[this.field[position[0]][position[1]]];
             this.expand_cell(position,[]);
         }
+        this.detect_win(level);
     },
 
     right_click_cell: function (cell_node) {
@@ -132,6 +136,51 @@ var Field = {
                 node_ref.innerHTML = cell_dict[this.field[cell[0]][cell[1]]];
                 // checked.push(key);
                 // this.expand_cell(cell, checked);
+            }
+        }
+    },
+
+    detect_fail: (field, cell_node, position)=>{
+        if (field[position[0]][position[1]] === 9) {
+            cell_node.innerHTML = cell_dict[10];
+            cell_node.style.backgroundColor = "red";
+            document.querySelector("#start-btn").innerHTML = "😭";
+            timer.pause();
+            let cells = document.querySelectorAll(".cell");
+            for (let cell of cells) {
+                let id_arr = cell.id.split("-");
+                let r = parseInt(id_arr[1]);
+                let c = parseInt(id_arr[2]);
+                if (cell.classList.toString().indexOf("cell-unknown") > -1) {
+                    if (field[r][c] < 9) {
+                        cell.classList = "cell cell-solved";
+                        cell.innerHTML = cell_dict[field[r][c]];
+                    } else if (cell.getAttribute("flag") === "no") {
+                        cell.innerHTML = cell_dict[9];
+                    }
+                }
+            }
+            return true;
+        }
+        return false;
+    },
+
+    detect_win: (level)=>{
+        let cells = document.querySelectorAll(".cell");
+        let solved = 0;
+        for (let cell of cells) {
+            if (cell.classList.toString().indexOf("cell-solved") > -1) {
+                solved++;
+            }
+        }
+        if (solved === level.row*level.col-level.mine) {
+            document.querySelector("#start-btn").innerHTML = "🕶";
+            timer.pause();
+            set_mine_left(0);
+            for (let cell of cells) {
+                if (cell.classList.toString().indexOf("cell-unknown") > -1 && cell.getAttribute("flag") === "no") {
+                    cell.innerHTML = cell_dict[9];
+                }
             }
         }
     }

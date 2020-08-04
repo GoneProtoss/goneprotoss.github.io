@@ -67,5 +67,10 @@ const timer = {
             if (tmp >= 999) {tmp = 999}
             timer_node.innerHTML = tmp.toString().padStart(3, "0");
         }, 1000);
+    },
+    pause: ()=>{
+        if (this.time_id) {
+            clearInterval(this.time_id);
+        }
     }
 };
