@@ -73,6 +73,14 @@ const Field = {
                     return false;
                 });
 
+                cell_node.addEventListener('dblclick',(event)=>{
+                    event.preventDefault();
+                    if (cell_node.classList.toString().indexOf("cell-solved") > -1) {
+                        this.dblclick_cell(event.target, [row, col]);
+                    }
+                    return false;
+                });
+
                 cell_node.oncontextmenu = (event)=>{
                     event.preventDefault();
                     if (cell_node.classList.toString().indexOf("cell-unknown") > -1) {
@@ -95,16 +103,49 @@ const Field = {
         if (this.state === 0) {
             this.init_field(level, position);
             cell_node.innerHTML = cell_dict[this.field[position[0]][position[1]]];
-            this.expand_cell(position,[]);
+            this.expand_cell(position, new Set());
             this.state = 1;
         } else {
             if (this.detect_fail(this.field, cell_node, position)) {
                 return false;
             }
             cell_node.innerHTML = cell_dict[this.field[position[0]][position[1]]];
-            this.expand_cell(position,[]);
+            this.expand_cell(position, new Set());
         }
         this.detect_win(level);
+    },
+
+    dblclick_cell: function (cell_node, position) {
+        if (cell_node.nodeName === "SPAN") {
+            cell_node = cell_node.parentNode;
+        }
+        let cells_around = get_cells_around(position[0], position[1], this.field.length, this.field[0].length);
+        let cell_val = this.field[position[0]][position[1]];
+        let flag_cells = [];
+        let unknown_cells = [];
+
+        for (let cell of cells_around) {
+            let cell_node = document.getElementById("c-"+cell[0]+"-"+cell[1]);
+            if (cell_node.getAttribute("flag") === "yes") {
+                flag_cells.push(cell_node);
+            } else if (cell_node.classList.toString().indexOf("cell-unknown") > -1) {
+                if (this.field[cell[0]][cell[1]] === 9) {
+                    cell_node.click();
+                    return false;
+                }
+                unknown_cells.push(cell_node);
+            }
+        }
+
+        if (flag_cells.length < cell_val) {
+            return false;
+        }
+
+        for (let cell of unknown_cells) {
+            cell.click();
+        }
+
+        return true;
     },
 
     right_click_cell: function (cell_node) {
@@ -126,7 +167,7 @@ const Field = {
     },
 
     expand_cell: function (position, checked) {
-        checked.push(position[0] + "-" + position[1]);
+        checked.add(position[0] + "-" + position[1]);
         let cells_around = get_cells_around(position[0], position[1], this.field.length, this.field[0].length);
         for (let cell of cells_around) {
             let key = cell[0] + "-" + cell[1];
@@ -134,8 +175,11 @@ const Field = {
                 let node_ref = document.getElementById("c-"+key);
                 node_ref.classList = "cell cell-solved";
                 node_ref.innerHTML = cell_dict[this.field[cell[0]][cell[1]]];
-                // checked.push(key);
-                // this.expand_cell(cell, checked);
+                if (this.field[cell[0]][cell[1]] === 0 && !checked.has(key)) {
+                    checked.add(key);
+                    this.expand_cell(cell, checked);
+                    // break;
+                }
             }
         }
     },
