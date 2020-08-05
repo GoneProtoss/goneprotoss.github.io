@@ -129,16 +129,24 @@ const Field = {
             if (cell_node.getAttribute("flag") === "yes") {
                 flag_cells.push(cell_node);
             } else if (cell_node.classList.toString().indexOf("cell-unknown") > -1) {
-                if (this.field[cell[0]][cell[1]] === 9) {
-                    cell_node.click();
-                    return false;
-                }
                 unknown_cells.push(cell_node);
             }
         }
 
-        if (flag_cells.length < cell_val) {
+        if (flag_cells.length !== cell_val) {
             return false;
+        }
+
+        for (let cell of cells_around) {
+            let cell_node = document.getElementById("c-"+cell[0]+"-"+cell[1]);
+            if (
+                cell_node.classList.toString().indexOf("cell-unknown") > -1 &&
+                cell_node.getAttribute("flag") === "no" &&
+                this.field[cell[0]][cell[1]] === 9
+            ) {
+                cell_node.click();
+                return false;
+            }
         }
 
         for (let cell of unknown_cells) {
