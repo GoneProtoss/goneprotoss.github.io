@@ -1,3 +1,4 @@
+/* error-404 box */
 .error-404 {
     height: 400px;
     width: 500px;
@@ -41,7 +42,7 @@
 
 
 
-
+/* circle */
 .circle,
 .circle::before,
 .circle::after {
@@ -66,3 +67,109 @@
 
 .circle::before {transform: rotate(120deg);}
 .circle::after {transform: rotate(240deg);}
+
+
+
+/* computer */
+.computer {
+    font-size: 10px;
+    width: 25em;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: darkorange;
+}
+
+.computer > * {
+    position: relative;
+    box-sizing: border-box;
+}
+
+.computer > *::before,
+.computer > *::after {
+    content: '';
+    position: absolute;
+    box-sizing: border-box;
+}
+
+.monitor {
+    width: 17em;
+    height: 10em;
+    border: 0.5em solid;
+    border-radius: 0.5em;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    top: -2em;
+}
+
+.monitor::before {
+    width: 1.5em;
+    height: 3em;
+    background-color: currentColor;
+    top: 9.5em;
+}
+
+.monitor::after {
+    width: 5em;
+    height: 1em;
+    background-color: currentColor;
+    border-radius: 0.3em;
+    top: 12.5em;
+}
+
+.host {
+    width: 7em;
+    height: 14em;
+    border: 0.5em solid;
+    border-radius: 0.5em;
+}
+
+.host::before {
+    width: 5em;
+    height: 1em;
+    background-color: currentColor;
+    border-radius: 0.2em;
+    top: 8em;
+    left: 0.5em;
+    box-shadow: 0 1.5em 0;
+}
+
+.host::after {
+    width: 0.6em;
+    height: 0.6em;
+    background-color: currentColor;
+    border-radius: 50%;
+    right: 1.5em;
+    bottom: 0.5em;
+    box-shadow: 1em 0 0 0.1em;
+}
+
+
+
+/* heart */
+.heart {
+    font-size: 10px;
+    width: 12em;
+    position: relative;
+    display: flex;
+}
+
+.heart::before,
+.heart::after {
+    content: '';
+    position: relative;
+    width: 6em;
+    height: 10em;
+    border-radius: 3em 3em 0 0;
+    background-color: hsl(0, 79%, 72%, 1);
+}
+
+.heart::before {
+    transform-origin: right bottom;
+    transform: rotate(45deg);
+}
+.heart::after {
+    transform-origin: left bottom;
+    transform: rotate(-45deg);
+}
