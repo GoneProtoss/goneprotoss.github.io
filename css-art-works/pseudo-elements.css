@@ -1,14 +1,14 @@
 /* error-404 box */
 .error-404 {
-    height: 400px;
-    width: 500px;
-    padding: 120px 60px;
+    font-size: 50px;
+    height: 7.8em;
+    width: 9em;
+    padding: 2.8em 1em;
     background-color: slategray;
     opacity: 0.8;
 }
 
 .error-404 p {
-    font-size: 50px;
     width: 7em;
     color: whitesmoke;
     font-family: sans-serif;
@@ -22,13 +22,13 @@
 .error-404 p::after {
     content: '';
     position: absolute;
-    top: 0;
-    left: 0;
+    top: -0.2em;
+    left: -0.2em;
     width: 100%;
     height: 100%;
     border: 0.2em solid orange;
     transform: rotate(45deg);
-    box-shadow: 0.3em 0.3em 0.3em hsl(0, 0%, 35%, .8);
+    box-shadow: 0.2em 0.2em 0.2em hsl(0, 0%, 35%, .8);
 }
 
 .error-404 p::before {
@@ -172,4 +172,229 @@
 .heart::after {
     transform-origin: left bottom;
     transform: rotate(-45deg);
+}
+
+
+
+/* steamer */
+.steamer-box {
+    font-size: 10px;
+    margin: 0;
+    height: 36em;
+    padding: 3em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: pink;
+}
+
+.steamer {
+    width: 30em;
+    height: 30em;
+    background-color: white;
+    border-radius: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.pot {
+    width: 16em;
+    height: 12em;
+    background-color: darkslateblue;
+    border-radius: 0.5em 0.5em 6.5em 6.5em;
+    border-right: 1.5em solid midnightblue;
+    position: relative;
+}
+
+.steamer {
+    z-index: 1;
+}
+
+.pot::before {
+    content: '';
+    position: absolute;
+    width: 23em;
+    height: 2.5em;
+    background-color: tomato;
+    border-radius: 1.25em;
+    left: -3.5em;
+    top: 2em;
+    z-index: -1;
+}
+
+.lid {
+    width: 17em;
+    height: 6em;
+    background-color: gold;
+    border-radius: 6em 6em 0 0;
+    border-right: 1.5em solid goldenrod;
+    border-bottom: 1.2em solid goldenrod;
+    position: relative;
+    top: 0.5em;
+    z-index: 1;
+}
+
+.lid::before {
+    content: '';
+    position: absolute;
+    width: 4em;
+    height: 4em;
+    background-color: tomato;
+    border-radius: 50%;
+    top: -2.5em;
+    left: 6.5em;
+}
+
+.pot::after {
+    content: '';
+    position: absolute;
+    width: 8em;
+    height: 8em;
+    border: 0.5em solid;
+    border-color: transparent transparent white transparent;
+    border-radius: 50%;
+    top: 1.5em;
+    left: 1.2em;
+    transform: rotate(30deg);
+}
+
+.lid::after {
+    content: '';
+    position: absolute;
+    width: 6em;
+    height: 6em;
+    border: 0.5em solid;
+    border-color: transparent transparent transparent white;
+    border-radius: 50%;
+    top: 0.8em;
+    left: 1.6em;
+    transform: rotate(45deg);
+}
+
+
+
+/* monster */
+.monster-box {
+    font-size: 20px;
+    margin: 0;
+    height: 30em;
+    padding: 1em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: lightgoldenrodyellow;
+}
+
+.monster {
+    width: 10em;
+    height: 13em;
+    color: limegreen;
+    background-color: currentColor;
+    border-radius: 5em 5em 5% 5%;
+    position: relative;
+}
+
+.eye {
+    position: absolute;
+    width: 6.5em;
+    height: 6.5em;
+    background: radial-gradient(
+        circle at 50% 25%,
+        white 0.4em,
+        transparent 0.4em
+    ),
+    radial-gradient(
+        circle at 50% 40%,
+        black 1.7em,
+        transparent 1.7em
+    ),
+    white;
+    border-radius: 92% 92% 60% 60%;
+    top: 2em;
+    left: 1.75em;
+    box-shadow: 0.2em 0.9em 0 hsla(0, 0%, 0%, 0.1);
+}
+
+.mouth {
+    position: absolute;
+    width: 3em;
+    height: 2.1em;
+    background-color: black;
+    bottom: 0.9em;
+    left: 3.5em;
+    border-radius: 70% 70% 3.5em 3.5em;
+    overflow: hidden;
+}
+
+.mouth::before {
+    content: '';
+    position: absolute;
+    width: inherit;
+    height: 0.6em;
+    background-color: tomato;
+    border-radius: 50% 50% 0 0;
+    bottom: 0;
+}
+
+.mouth .teeth,
+.mouth .teeth::before,
+.mouth .teeth::after {
+    content: '';
+    position: absolute;
+    border-top: 0.8em solid white;
+    border-left: 0.4em solid transparent;
+    border-right: 0.4em solid transparent;
+    left: 1.1em;
+}
+
+.mouth .teeth::before {
+    top: -0.9em;
+    left: -1.1em;
+}
+.mouth .teeth::after {
+    top: -0.9em;
+    left: 0.3em;
+}
+
+.ear {
+    position: absolute;
+    width: 2.4em;
+    height: 4.5em;
+    top: -3em;
+    display: flex;
+    justify-content: center;
+    transform-origin: bottom;
+}
+
+.ear::before,
+.ear::after {
+    content: '';
+    position: absolute;
+    background-color: currentColor;
+}
+
+.ear::before {
+    width: 0.9em;
+    height: inherit;
+}
+
+.ear::after {
+    width: 2.4em;
+    height: 2.4em;
+    border-radius: 50%;
+    top: -0.5em;
+    box-shadow: inset -0.3em -0.2em 0 hsla(0, 0%, 0%, 0.1);
+}
+
+.ear.left {
+    left: 2em;
+    transform: rotate(-20deg);
+}
+
+.ear.right {
+    right: 2em;
+    transform: rotate(20deg);
 }
