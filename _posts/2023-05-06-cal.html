@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>达标率/不达标率 计算器</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        main {
+            display: flex;
+            flex-direction: column;
+            margin-top: 2em;
+            padding: 2em;
+            box-sizing: border-box;
+            width: 300px;
+            border: 1px solid gray;
+            border-radius: 1em;
+        }
+
+        main label, main button {
+            margin: .4em 0;
+            font-size: 1.2em;
+        }
+
+        main input {
+            padding-right: 1em;
+            font-size: 1.2em;
+            line-height: 1.6em;
+            text-align: right;
+        }
+    </style>
+</head>
+<body>
+    <main>
+        <h3>达标率/不达标率 计算器</h3>
+        <label for="total">抽查总数</label>
+        <input type="number" name="total" id="total" />
+        <label for="valid">符合要求</label>
+        <input type="number" name="valid" id="valid" />
+        <button id="calc" onclick="calc()">点此计算</button>
+        <label for="valid_rate">达标率</label>
+        <input name="valid_rate" id="valid_rate" readonly disabled />
+        <label for="invalid_rate">不达标率</label>
+        <input name="invalid_rate" id="invalid_rate" readonly disabled />
+    </main>
+<script>
+    function calc() {
+        let valid = document.querySelector("#valid").value;
+        let total = document.querySelector("#total").value;
+
+        if (valid === "" || total === "") {
+            alert("总数和符合要求数都要填哦");
+        }
+
+        if (Number.parseInt(total) < 1) {
+            alert("总数必须大于0哦");
+        }
+
+        let raw_valid_rate     = Number.parseInt(valid) / Number.parseInt(total);
+        let valid_percentage   = raw_valid_rate * 100;
+        let invalid_percentage = 100 - valid_percentage;
+
+        document.querySelector("#valid_rate").value   = valid_percentage.toFixed(2) + "%";
+        document.querySelector("#invalid_rate").value = invalid_percentage.toFixed(2) + "%";
+    }
+</script>
+</body>
+</html>
