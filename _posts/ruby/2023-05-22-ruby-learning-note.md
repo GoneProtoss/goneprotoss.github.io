@@ -485,12 +485,12 @@ uri.send(:set_port, 443)  # 443, 可以了
 ```rb
 # 一下示例为给 class 添加实例级复用代码
 module Address
-  attr_accessor\
-    :address_line_1,\
-    :address_line_2,\
-    :city,\
-    :state,\
-    :postal_code,\
+  attr_accessor \
+    :address_line_1, \
+    :address_line_2, \
+    :city, \
+    :state, \
+    :postal_code, \
     :country
 
   def mailing_label
