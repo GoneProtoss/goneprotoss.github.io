@@ -22,8 +22,8 @@ export PATH="/usr/local/lib/ruby/gems/3.2.0/bin:$PATH"
 然后配置国内源
 
 ```bash
-gem sources --add https://mirrors.tuna.tsinghua.edu.cn/rubygems/ --remove https://rubygems.org/
-bundle config mirror.https://rubygems.org https://mirrors.tuna.tsinghua.edu.cn/rubygems
+gem sources --add https://gems.ruby-china.com --remove https://rubygems.org/
+bundle config mirror.https://rubygems.org https://gems.ruby-china.com
 ```
 
 然后一切准备就绪
