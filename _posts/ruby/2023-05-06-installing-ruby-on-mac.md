@@ -32,3 +32,9 @@ You are replacing the current local value of mirror.https://rubygems.org, which 
 ```
 
 然后一切准备就绪
+
+每次 `brew` 更新完 ruby gem 路径就变了，用这个查看
+
+```bash
+gem environment
+```
